@@ -2,10 +2,14 @@ package createCreationsUtility.folderCreators;
 
 import java.io.IOException;
 
-public class CreationMainFolderCreator {
+import menus.CreationModelListener;
 
-	public CreationMainFolderCreator() {
+public class CreationMainFolderCreator implements CreationModelListener {
+	
+	private CreationModelListener listener;
 
+	public CreationMainFolderCreator(CreationModelListener caller) {
+		this.listener = caller;
 		createMainFolder();
 	}
 
@@ -20,5 +24,12 @@ public class CreationMainFolderCreator {
 			e.printStackTrace();
 		}
 
+	}
+
+	@Override
+	public void modelHasChanged() {
+		
+		listener.modelHasChanged();
+		
 	}
 }

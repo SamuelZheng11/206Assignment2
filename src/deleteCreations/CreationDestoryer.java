@@ -19,7 +19,7 @@ public class CreationDestoryer {
 			builder.start();
 			
 		} catch (Exception ex) {
-			System.out.println("Unexpected error occured when trying to merge audio/video of creation");
+			System.out.println("Unexpected error occured when trying to delete creation");
 		}
 	}
 }

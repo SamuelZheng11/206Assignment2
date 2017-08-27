@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
 
-import createCreationsUtility.finders.CreationsFinder;
 import createCreationsUtility.folderCreators.CreationMainFolderCreator;
 import deleteCreations.CreationDestoryer;
 import menus.CreateCreationsMenu;
@@ -20,11 +19,11 @@ public class MainMenuController implements ActionListener, CreationModelListener
 	private MainMenu mainMenu = new MainMenu(this);
 	private CreateCreationsMenu createMenu = new CreateCreationsMenu(this);
 	private ViewCreationsMenu viewMenu = new ViewCreationsMenu(this);
-	private CreationsFinder finder;
+	private CreationModelUpdater modelUpdater = new CreationModelUpdater(viewMenu);
 
 	private MainMenuController() {
-		new CreationMainFolderCreator();
 		updateCreationsModel();
+		new CreationMainFolderCreator(this);
 	}
 
 	public static MainMenuController getController() {
@@ -104,8 +103,7 @@ public class MainMenuController implements ActionListener, CreationModelListener
 	}
 
 	private void updateCreationsModel() {
-		finder = new CreationsFinder(viewMenu);
-		finder.execute();
+		modelUpdater.loadCreationsIntoModel();
 	}
 
 	private void changeRecordButtonPressable(boolean bool) {
