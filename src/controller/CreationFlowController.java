@@ -13,6 +13,8 @@ import creators.creationCreators.VideoMakerListener;
 import creators.folderCreators.CreationSubFolderCreator;
 import creators.folderCreators.SubFolderCreatorListener;
 import menus.CreationModelListener;
+import players.AudioPlayer;
+import players.AudioPlayerListener;
 
 /**
  * this class is concerned with the creation of a creation
@@ -26,7 +28,7 @@ import menus.CreationModelListener;
  * the entire class is LIKE that of a template method but in class form
  *
  */
-public class CreateFlowController implements SubFolderCreatorListener, AudioMakerListener, VideoMakerListener, AudioVideoMergerListener {
+public class CreationFlowController implements SubFolderCreatorListener, AudioMakerListener, VideoMakerListener, AudioVideoMergerListener, AudioPlayerListener {
 
 	// private variable used for storing the name of the creation that we want to
 	// create
@@ -36,7 +38,7 @@ public class CreateFlowController implements SubFolderCreatorListener, AudioMake
 	private ArrayList<CreationModelListener> listeners = new ArrayList<CreationModelListener>();
 
 	// constructor that will assign the name that is wanted to the field
-	public CreateFlowController(String creationName) {
+	public CreationFlowController(String creationName) {
 		this.creationName = creationName;
 	}
 	
@@ -80,23 +82,9 @@ public class CreateFlowController implements SubFolderCreatorListener, AudioMake
 	@Override
 	public void AudioHadBeenMade() {
 		
-		int confirmation = JOptionPane.showConfirmDialog(null,
-				"would you like to redo the recording [yes] or finish the creation [no]", null,
-				JOptionPane.YES_NO_OPTION);
-
-		// once the user has read the options and has selected chooses to redo the recording then
-		if (confirmation == JOptionPane.YES_OPTION) {
-			//re-record the recording by executing then interface method that triggers the audio to be created
-			videoHasBeenMade();
-		}
-		//otherwise the user is happy with the creation and want to finsih the creation
-		else {
-			
-			//in that case merge the audio and video files
-			AudioVideoMerger merger = new AudioVideoMerger(creationName);
-			merger.addListener(this);
-			merger.mergeVideoAudio();
-		}
+		AudioPlayer audioPlayer = new AudioPlayer(creationName);
+		audioPlayer.addListener(this);
+		audioPlayer.playAudio();
 
 	}
 
@@ -107,5 +95,28 @@ public class CreateFlowController implements SubFolderCreatorListener, AudioMake
 		for(CreationModelListener listener : listeners) {
 			listener.modelHasChanged();
 		}
+	}
+
+	//interface method used to notify the controller that the audio has been played
+	@Override
+	public void audioHasBeenPlayed() {
+		int confirmation = JOptionPane.showConfirmDialog(null,
+				"would you like to redo the recording [yes] or finish the creation [no]", null,
+				JOptionPane.YES_NO_OPTION);
+
+		// once the user has read the options and has selected chooses to redo the recording then
+		if (confirmation == JOptionPane.YES_OPTION) {
+			//re-record the recording by executing then interface method that triggers the audio to be created
+			videoHasBeenMade();
+		}
+		//otherwise the user is happy with the creation and want to finish the creation
+		else {
+			
+			//in that case merge the audio and video files
+			AudioVideoMerger merger = new AudioVideoMerger(creationName);
+			merger.addListener(this);
+			merger.mergeVideoAudio();
+		}
+		
 	}
 }

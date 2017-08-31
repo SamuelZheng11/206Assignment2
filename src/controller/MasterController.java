@@ -156,7 +156,7 @@ public class MasterController implements ActionListener, CreationModelListener, 
 				// create an instance of the creation creator controller, this will make the
 				// creating of the creation
 				// controlled as some parts may take longer to make
-				CreateFlowController creationController = new CreateFlowController(creationMenu.getCreationName());
+				CreationFlowController creationController = new CreationFlowController(creationMenu.getCreationName());
 
 				// adding the main menu controller as a listener to the creation flow controller
 				// to be notifed when the creation has been made
