@@ -11,16 +11,16 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import controller.MainMenuController;
+import controller.MasterController;
 
 public class CreateCreationsMenu {
 	private JFrame frame;
-	private MainMenuController menuController;
+	private MasterController menuController;
 	private JButton returnButton;
 	private JButton recordButton;
 	private JTextField creationName;
 
-	public CreateCreationsMenu(MainMenuController controller) {
+	public CreateCreationsMenu(MasterController controller) {
 
 		this.menuController = controller;
 		setupCreateCreationsMenu();
@@ -78,7 +78,7 @@ public class CreateCreationsMenu {
 		frame.getContentPane().add(returnPanel);
 		returnPanel.setLayout(new FlowLayout());
 
-		returnButton = new JButton("Return to main menu");
+		returnButton = new JButton("Return to view menu");
 		returnButton.setVerticalAlignment(SwingConstants.CENTER);
 
 		returnPanel.add(returnButton);
@@ -110,5 +110,13 @@ public class CreateCreationsMenu {
 	
 	public void setRecordButtonEnable(boolean bool) {
 		recordButton.setEnabled(bool);
+	}
+	
+	public void clearCreationNameField() {
+		creationName.setText("");
+	}
+	
+	public void destory() {
+		frame.dispose();
 	}
 }

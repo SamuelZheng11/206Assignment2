@@ -2,27 +2,22 @@ package menus;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import controller.MainMenuController;
+import controller.MasterController;
 
-public class MainMenu implements ActionListener {
+public class MainMenu {
 
 	private JFrame frame;
-	private JComboBox<String> userSelection = new JComboBox<String>();
 	private JButton confirmSelection = new JButton();
-	private MainMenuController controller;
+	private MasterController controller;
 
-	public MainMenu(MainMenuController controller) {
+	public MainMenu(MasterController controller) {
 
 		this.controller = controller;
 		setupMenu();
@@ -55,19 +50,9 @@ public class MainMenu implements ActionListener {
 		introLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
 		// create a label used for instruction text
-		JLabel instruction = new JLabel("Please select one of the options from the drop down box then press proceed");
+		JLabel instruction = new JLabel("Please press the proceed button to contiune");
 		introTextPanel.add(instruction);
 		instruction.setHorizontalAlignment(SwingConstants.CENTER);
-
-		// create panel for drop down bar panel
-		JPanel dropDownBoxPanel = new JPanel();
-		frame.getContentPane().add(dropDownBoxPanel);
-
-		dropDownBoxPanel.add(userSelection);
-		// add selection options for combo box
-		userSelection
-				.setModel(new DefaultComboBoxModel<String>(new String[] { "List/Play/Delete Creations", "Make a Creation" }));
-		userSelection.setToolTipText("Please choose one of the option avalible");
 
 		// creating panel to put the proceed button on
 		JPanel confirmPanel = new JPanel();
@@ -81,9 +66,6 @@ public class MainMenu implements ActionListener {
 		// add the controller as a listener to the proceed button
 		confirmSelection.addActionListener(controller);
 
-		// adding the frame as a listener
-		confirmSelection.addActionListener(this);
-
 		// packing GUI to fit the panels created
 		frame.pack();
 
@@ -91,24 +73,16 @@ public class MainMenu implements ActionListener {
 		frame.setVisible(false);
 	}
 
-	public String getComboBoxItem() {
-		return (String) userSelection.getSelectedItem().toString();
-	}
-
 	public JButton getProceedButton() {
 		return this.confirmSelection;
 	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == this.confirmSelection) {
-			frame.setVisible(false);
-		}
-
+	
+	public void makeVisable() {
+		frame.setVisible(true);
 	}
-
-	public void setVisable(Boolean bool) {
-		frame.setVisible(bool);
+	
+	public void destoryFrame() {
+		frame.dispose();
 	}
 
 }

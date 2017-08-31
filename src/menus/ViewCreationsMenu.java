@@ -1,10 +1,12 @@
 package menus;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 
+import javax.swing.Box;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -12,21 +14,19 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 
-import controller.MainMenuController;
+import controller.MasterController;
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
-import java.awt.Component;
-import javax.swing.Box;
+import javax.swing.ScrollPaneConstants;
 
 
 public class ViewCreationsMenu {
 
-	private MainMenuController viewController;
+	private MasterController viewController;
 	private JFrame frame;
-	private JButton returnBtn;
+	private JButton createNewCreation;
 	private JButton delete;
 	private JButton play;
 	public EmbeddedMediaPlayer video;
@@ -34,7 +34,7 @@ public class ViewCreationsMenu {
 	private JList<String> creationList;
 	private Component verticalStrut;
 
-	public ViewCreationsMenu(MainMenuController mainMenuController) {
+	public ViewCreationsMenu(MasterController mainMenuController) {
 
 		this.viewController = mainMenuController;
 		setupView();
@@ -69,7 +69,6 @@ public class ViewCreationsMenu {
 		creationList.setVisibleRowCount(-1);
 		
 		JScrollPane scrollPane = new JScrollPane(creationList);
-
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
 		showCreationsPanel.add(scrollPane, BorderLayout.WEST);
@@ -97,10 +96,10 @@ public class ViewCreationsMenu {
 		
 		buttonPanel.add(delete);
 		
-		returnBtn = new JButton("Return to main menu");
-		buttonPanel.add(returnBtn);
-		returnBtn.setVerticalAlignment(SwingConstants.CENTER);
-		returnBtn.addActionListener(viewController);
+		createNewCreation = new JButton("New creation");
+		buttonPanel.add(createNewCreation);
+		createNewCreation.setVerticalAlignment(SwingConstants.CENTER);
+		createNewCreation.addActionListener(viewController);
 		
 		// packing GUI to fit the panels created
 		frame.pack();
@@ -110,8 +109,8 @@ public class ViewCreationsMenu {
 
 	}
 	
-	public JButton getReturnButton() {
-		return this.returnBtn;
+	public JButton getCreateNewCreationButton() {
+		return this.createNewCreation;
 	}
 	
 	public JButton getPlayButton() {
